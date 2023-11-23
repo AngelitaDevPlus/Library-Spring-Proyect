@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <title>Angelita Library</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+        
+        <header>
+            <div class="container">
+                <h2>Insert the Publisher here!</h2>
+            </div>
+        </header>
+        
+        <div class="container">
+            
+            <form action="/publisher/registered" method="POST">
+            
+                <div class="form-group">
+                    <input type="text" class="form-group" name="name" placeholder="Publisher Name">
+                </div>   
+
+                <div th:if="${error != null}" class="card text-white bg-danger mb-3 messageError">
+                    <div class="card-body"> 
+                        <h5 class="card-title">Error 👎</h5>
+                        <p class="card-text" th:text="${error}"> </p>
+                    </div>
+                </div>
+
+                <div th:if="${success != null}" class="card text-white bg-success mb-3 mt-3 messageSuccess">
+                    <div class="card-body"> 
+                        <h5 class="card-title">Success! 👎</h5>
+                        <p class="card-text" th:text="${success}"> </p>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary"> Submit
+                </button>
+                
+            </form>
+        
+        </div>
+        
+    </body>
+</html>
