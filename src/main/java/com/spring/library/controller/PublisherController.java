@@ -1,13 +1,12 @@
 package com.spring.library.controller;
 
-import com.spring.library.exceptions.CostumizedException;
+import com.spring.library.exceptions.CustomizedException;
 import com.spring.library.service.PublisherService;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,27 +20,59 @@ public class PublisherController {
     
     @GetMapping("/register") //localhost:8080/publisher/register
     public String register() {
-        return "publisher_form.html";
+        return "publisher_form";
     }
     
     @PostMapping("/registered")
     public String registered(@RequestParam(required = false) String name, ModelMap model) {
-        
         try {
             publisherService.createPublisher(name);
-            
             model.put("success", "Publisher succesfuly uploaded! YEY!!!");
-            
-            System.out.println(name + " OK");
-        } catch (CostumizedException ex) {
-            
-            model.put("error", ex.getMessage());
-            //Logger.getLogger(PublisherController.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Null OK!");
-            return "publisher_form.html";
+        } catch (CustomizedException ex) {
+            model.put("error", "Publisher not uploaded! " + ex.getMessage());
+            return "publisher_form";
         }
-        
-        System.out.println("Index OK");
-        return "index.html";
+        return "publisher_form";
+    }
+  
+    @GetMapping("/toList")
+    public String publisherToList() {
+        return "publisher_short_form"; //CREAR
+    }
+    
+    @PostMapping("/oneListed")
+    public String listOnePublisher(@RequestParam String name, ModelMap model) {
+        try {
+            model.addAttribute("publisher", publisherService.getOnePublisherByName(name));
+            return "publisher_one"; // CREAR
+        } catch (CustomizedException ex) {
+            model.put("error", ex.getMessage());
+            return "publisher_short_form";
+        }
+    }
+    
+    @GetMapping("/list")
+    public String listPublisher(ModelMap model) {
+        model.addAttribute("publishers", publisherService.listPublishers());
+        return "publisher_list"; // REVISAR
+    }
+    
+    @GetMapping("/modify/{id}") //MODIFICAR
+    public String modify(@PathVariable String id, ModelMap model) {
+        model.put("publisher", publisherService.getOnePublisherById(id));
+        return "publisher_modify";
+    }
+    
+    @PostMapping("/modify/{id}") //MODIFICAR
+    public String modify(@PathVariable String id, String name, ModelMap model) {
+        try {
+            publisherService.modifyPublisher(id, name);
+            return "redirect:../list";
+        } catch (CustomizedException ex) {
+            model.put("error", ex.getMessage());
+            return "publisher_modify";
+        }
     }
 }
+
+

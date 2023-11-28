@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"> 
+
+    <head>
+        <title>Angelita Library</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    </head>
+
+    <body>
+
+        <header>
+            <div class="container">
+                <h2>Modify Publisher here!</h2>
+            </div>
+        </header>
+
+        <div class="container">
+
+            <form th:action="@{/publisher/modify/__${publisher.id}__}" method="POST">
+
+                <input type="hidden" th:value="${publisher.id}" name="id"></input>
+
+                    <div class="form-group">
+                        <input th:value="${publisher.name}" type="text" class="form-group" name="name"></input>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"> Update 
+                    </button> 
+
+            </form>
+
+        </div>
+
+    </body>
+</html>

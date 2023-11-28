@@ -1,42 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
     <head>
         <title>Angelita Library</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
     </head>
-    
+
     <body>
-        
+
         <header>
             <div class="container">
                 <h2>Insert the Book here!</h2>
             </div>
         </header>
-        
+
         <div class="container">
-            
-            <form action="/book/registered" method="POST">
-                
+
+            <form class="form" action="/book/registered" method="POST">
+
                 <div class="form-group">
-                    <input type="number" class="form-group" name="isbn" placeholder="ISBN">
+                    <input type="number" class="form-control" name="isbn" placeholder="ISBN">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-group" name="title" placeholder="Title">
+                    <input type="text" class="form-control" name="title" placeholder="Title">
                 </div>
                 <div class="form-group">
-                    <input type="number" class="form-group" name="copies" placeholder="Number of copies">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-group" name="idAuthor" placeholder="Author ID">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-group" name="idPublisher" placeholder="Publisher ID">
+                    <input type="number" class="form-control" name="copies" placeholder="Number of copies">
                 </div>
                 
- 
+                <div class="form-group">
+                    
+                    <select name="idAuthor">
+                        
+                        <option>Select Author</option>
+                        <option th:each="author : ${authors}"
+                                th:value="${author.id}"
+                                th:text="${author.name}"
+                                />
+                    </select>
+                </div>
                 
+                <div class="form-group">
+                    
+                    <select name="idPublisher">
+                        
+                        <option>Select Publisher</option>
+                        <option th:each="publisher : ${publishers}"
+                                th:value="${publisher.id}"
+                                th:text="${publisher.name}"
+                                />
+                    </select>
+                </div>
+
                 <div th:if="${error != null}" class="card text-white bg-danger mb-3 messageError">
                     <div class="card-body"> 
                         <h5 class="card-title">Error 👎</h5>
@@ -46,17 +62,17 @@
 
                 <div th:if="${success != null}" class="card text-white bg-success mb-3 mt-3 messageSuccess">
                     <div class="card-body"> 
-                        <h5 class="card-title">Success! 👎</h5>
+                        <h5 class="card-title">Success! 👍</h5>
                         <p class="card-text" th:text="${success}"> </p>
                     </div>
                 </div>
-                                
+
                 <button type="submit" class="btn btn-primary"> Submit 
                 </button> 
-                                    
+
             </form>
-        
+
         </div>
-        
+
     </body>
 </html>

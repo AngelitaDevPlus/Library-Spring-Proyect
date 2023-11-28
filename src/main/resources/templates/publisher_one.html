@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"> 
+
+    <head>
+        <title>Angelita Library</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    </head>
+
+    <body>
+
+        <header>
+            <div class="container">
+                <h2>One Publisher!</h2>
+            </div>
+        </header>
+
+        <div class="container">
+
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Publisher's Id</th>
+                        <th scope="col">Publisher's Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" th:text="${publisher.id}"></th>
+                        <td th:text="${publisher.name}"></td>
+                        <td>
+                            <a th:href="@{/publisher/modify/__${publisher.id}__}"><i class="fas fa-feather-alt"> </i> Modify </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>
