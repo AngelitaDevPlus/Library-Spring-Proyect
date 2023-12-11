@@ -27,7 +27,7 @@ public class AuthorController {
     public String registered(@RequestParam(required = false) String name, ModelMap model) {
         try {
             authorService.createAuthor(name);
-            model.put("success", "Author succesfuly uploaded! YEY!!!");
+            model.put("success", "Author successfully uploaded! YEY!!!");
         } catch (CustomizedException ex) {
             model.put("error", "Author not uploaded! " + ex.getMessage()); 
             return "author_form";
