@@ -1,6 +1,6 @@
 package com.spring.library.entity;
 
-import com.spring.library.enums.Rol;
+import com.spring.library.enums.Role;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class AppUser {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    private Role role;
 
     public AppUser() {
     }
@@ -54,11 +54,9 @@ public class AppUser {
         this.password = password;
     }
 
-    public Rol getRol() {
-        return rol;
-    }
+    public Role getRole() { return role; }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

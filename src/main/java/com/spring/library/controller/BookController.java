@@ -34,7 +34,7 @@ public class BookController {
         
         model.addAttribute("authors", authors);
         model.addAttribute("publishers", publishers);
-        return "book_form.html";
+        return "book_form";
     }
 
     @PostMapping("/registered")

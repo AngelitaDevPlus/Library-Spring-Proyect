@@ -1,9 +1,10 @@
 package com.spring.library.service;
 
 import com.spring.library.entity.AppUser;
-import com.spring.library.enums.Rol;
+import com.spring.library.enums.Role;
 import com.spring.library.exceptions.CustomizedException;
 import com.spring.library.repository.AppUserRepository;
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,9 +12,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +39,8 @@ public class AppUserService implements UserDetailsService {
         AppUser appUser = new AppUser();
         appUser.setName(name);
         appUser.setEmail(email);
-        appUser.setPassword(password);
-        appUser.setRol(Rol.USER); // Predetermine Rol as User
+        appUser.setPassword(new BCryptPasswordEncoder().encode(password));
+        appUser.setRole(Role.USER); // Predetermine Role as User
         appUserRepository.save(appUser);
     }
 
@@ -60,9 +65,11 @@ public class AppUserService implements UserDetailsService {
 
         if (appUser != null) {
             List<GrantedAuthority> permissions = new ArrayList<>();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROL_" + appUser.getRol().toString()); // ROLE_USER
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + appUser.getRole().toString()); // ROLE_USER
             permissions.add(p);
-
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("appUserSession", appUser);
             return new User(appUser.getEmail(), appUser.getPassword(), permissions);
         } else {
             return null;

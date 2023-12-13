@@ -1,6 +1,6 @@
 package com.spring.library.enums;
 
-public enum Rol {
+public enum Role {
     USER,
-    ADMIN;
+    ADMIN
 }

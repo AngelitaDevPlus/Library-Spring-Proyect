@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h2>Welcome Page!</h2>
+    </div>
+</header>
+
+<div class="collapse navbar-collapse elementosNav" id="navbarNavDropdown">
+    <ul class="navbar-nav ms-auto elementos">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" th:if="${session.appUserSession != null}" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Autores
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                <!-- <li><a class="dropdown-item"  th:href="@{/autor/registrar}">Crear Autor</a></li>
+                <li><hr class="dropdown-divider"></li> -->
+
+                <li><a class="dropdown-item" th:href="@{/autor/lista}">Listar Autores</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" th:if="${session.appUserSession != null}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Editoriales
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                <!-- <li><a class="dropdown-item" th:href="@{/editorial/registrar}">Crear Editorial</a></li>
+                <li><hr class="dropdown-divider"></li> -->
+
+                <li><a class="dropdown-item" th:href="@{/editorial/lista}">Listar Editoriales</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Perfil
+            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" th:href="@{/perfil}" >Editar Perfil</a></li>
+                <!-- <li><hr class="dropdown-divider"></li> -->
+
+                <li><a class="dropdown-item" th:href="@{/logout}" >Cerrar Sesión</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+
+</body>
+
+
