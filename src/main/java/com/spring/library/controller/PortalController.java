@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,31 +24,38 @@ public class PortalController {
     }
 
     @GetMapping("/")
-    public String index() { return "index"; }
+    public String index() {
+        return "index";
+    }
 
     @GetMapping("/register")
-    public String register() { return "register_form"; }
+    public String register() {
+        return "register_form";
+    }
 
     @PostMapping("/registered")
-    public String registered(@RequestParam String name,
-                             @RequestParam String email,
-                             @RequestParam String password,
-                             @RequestParam String password2,
-                             ModelMap model) {
+    public String registered(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String password2,
+            ModelMap model,
+            MultipartFile file) {
         try {
-            appUserService.register(name, email, password, password2);
+            appUserService.register(file, name, email, password, password2);
             model.put("success", "User successfully registered!!!");
+            return "index";
         } catch (CustomizedException ex) {
             model.put("error", "User not registered. " + ex.getMessage());
             model.put("name", name);
             model.put("email", email);
             return "register_form";
         }
-        return "register_form";
     }
+
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap model) {
-        if(error != null) {
+        if (error != null) {
             model.put("error", "User or Password invalid.");
         }
         return "login";
@@ -64,5 +69,34 @@ public class PortalController {
             return "redirect:/admin/dashboard";
         }
         return "welcomepage";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/profile")
+    public String profile(ModelMap model, HttpSession session) {
+        AppUser appUser = (AppUser) session.getAttribute("appUserSession");
+            model.put("appUser", appUser);
+        return "user_modify";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PostMapping("/profile/{id}")
+    public String update(@PathVariable("id") String idAppUser,
+                         @RequestParam String name,
+                         @RequestParam String email,
+                         @RequestParam String password,
+                         @RequestParam String password2,
+                         ModelMap model,
+                         MultipartFile file) {
+        try {
+            appUserService.update(file, idAppUser, name, email, password, password2);
+            model.put("success", "User updated correctly!");
+            return "welcomepage";
+        } catch (CustomizedException ex) {
+            model.put("error", "User not updated. " + ex.getMessage());
+            model.put("name", name);
+            model.put("email", email);
+            return "user_modify";
+        }
     }
 }

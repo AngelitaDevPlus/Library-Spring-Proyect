@@ -11,45 +11,70 @@
     </div>
 </header>
 
+<header class="header">
+    <section class="contenedorMain">
+
+<!--        <div class="tituloBiblioteca">-->
+<!--            <a class="navbar-brand" >BIBLIOTECA EGG</a>-->
+<!--        </div>-->
+
+        <div class="container contenedorLibros">
+            <p class="tituloLibros" th:if="${session.appUserSession != null}" th:text=" 'Hello again '+ ${session.appUserSession.name} "></p>
+        </div>
+
+        <div class="container">
+            <a th:if="${session.appUserSession.image != null}" class="d-flex align-items-center">
+                <img class="logo"  th:src="@{/image/profile/__${session.appUserSession.id}__}"  alt="Img">
+            </a>
+        </div>
+
+        <div class="bg-circle-1 bg-circle"></div>
+        <div class="bg-circle-2 bg-circle"></div>
+        <div class="bg-circle-3 bg-circle"></div>
+        <div class="bg-circle-4 bg-circle"></div>
+
+    </section>
+</header>
+
 <div class="collapse navbar-collapse elementosNav" id="navbarNavDropdown">
     <ul class="navbar-nav ms-auto elementos">
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" th:if="${session.appUserSession != null}" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Autores
+                Authors
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                 <!-- <li><a class="dropdown-item"  th:href="@{/autor/registrar}">Crear Autor</a></li>
                 <li><hr class="dropdown-divider"></li> -->
 
-                <li><a class="dropdown-item" th:href="@{/autor/lista}">Listar Autores</a></li>
+                <li><a class="dropdown-item" th:href="@{/autor/lista}">List Authors</a></li>
             </ul>
         </li>
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" th:if="${session.appUserSession != null}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Editoriales
+                Publishers
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                 <!-- <li><a class="dropdown-item" th:href="@{/editorial/registrar}">Crear Editorial</a></li>
                 <li><hr class="dropdown-divider"></li> -->
 
-                <li><a class="dropdown-item" th:href="@{/editorial/lista}">Listar Editoriales</a></li>
+                <li><a class="dropdown-item" th:href="@{/editorial/lista}">List Publishers</a></li>
             </ul>
         </li>
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Perfil
+                Profile
             </a>
 
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" th:href="@{/perfil}" >Editar Perfil</a></li>
+                <li><a class="dropdown-item" th:href="@{/profile}" >Update Profile</a></li>
                 <!-- <li><hr class="dropdown-divider"></li> -->
 
-                <li><a class="dropdown-item" th:href="@{/logout}" >Cerrar Sesión</a></li>
+                <li><a class="dropdown-item" th:href="@{/logout}" >Log Out</a></li>
             </ul>
         </li>
 
