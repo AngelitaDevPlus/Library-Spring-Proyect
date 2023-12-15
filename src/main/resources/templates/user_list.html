@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Angelita Library</title>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h2>User List!</h2>
+    </div>
+</header>
+
+<div class="container m-5">
+
+    <table class="table table-dark">
+        <thead class="align-items-center">
+        <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Profile Pic</th>
+            <th scope="col">Role</th>
+            <th scope="col">Change Role</th>
+            <th scope="col">Modify</th>
+
+        </tr>
+        </thead>
+        <tbody th:each="appUser : ${appUsers}">
+        <tr>
+            <th scope="row" th:text="${appUser.id}"></th>
+            <td th:text="${appUser.name}"></td>
+            <td
+            <a><img th:if="${appUser.image != null}" class="logo" th:src="@{/image/profile/__${appUser.id}__}"></a>
+            </td>
+
+            <td th:text="${appUser.role}"></td>
+
+            <td>
+                <a th:href="@{/admin/modifyRole/__${appUser.id}__}"><i class="fas fa-feather-alt"></i>Change</a>
+            </td>
+
+<!--            <td>-->
+<!--                <a th:href="@{/user/modify/__${appUser.id}__}"><i class="fas fa-feather-alt"></i> Update</a>-->
+<!--            </td>-->
+
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+
+</html>

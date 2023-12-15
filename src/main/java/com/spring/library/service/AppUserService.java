@@ -72,6 +72,24 @@ public class AppUserService implements UserDetailsService {
         }
     }
 
+    @Transactional
+    public void changeRole(String id){
+        Optional<AppUser> response = appUserRepository.findById(id);
+
+        if(response.isPresent()) {
+
+            AppUser appUser = response.get();
+
+            if(appUser.getRole().equals(Role.USER)) {
+
+                appUser.setRole(Role.ADMIN);
+
+            }else if(appUser.getRole().equals(Role.ADMIN)) {
+                appUser.setRole(Role.USER);
+            }
+        }
+    }
+
     public AppUser getOneAppUser(String idAppUser) {
         return appUserRepository.getReferenceById(idAppUser);
     }
@@ -88,6 +106,14 @@ public class AppUserService implements UserDetailsService {
         if (!password.equals(password2)) {
             throw new CustomizedException("Password must be the same.");
         }
+    }
+
+    @Transactional(readOnly=true)
+    public List<AppUser> listUsers() {
+        List<AppUser> listUsers = new ArrayList();
+        listUsers = appUserRepository.findAll();
+
+        return listUsers;
     }
 
     @Override

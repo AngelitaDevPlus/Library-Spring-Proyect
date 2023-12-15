@@ -24,7 +24,8 @@ public class PublisherService {
         publisher.setName(name);
         publisherRepository.save(publisher);
     }
-    
+
+    @Transactional(readOnly=true)
     public List<Publisher> listPublishers() {
         return publisherRepository.findAll();
     }
@@ -41,12 +42,14 @@ public class PublisherService {
             publisherRepository.save(publisher);
         }
     }
-    
+
+    @Transactional(readOnly=true)
     public Publisher getOnePublisherById(String idPublisher) {
         return publisherRepository.findById(idPublisher).orElseThrow(
                 () -> new NoSuchElementException("Publisher not found."));
     }
 
+    @Transactional(readOnly=true)
     public Publisher getOnePublisherByName(String name) throws CustomizedException {
         validate(name);
         if (publisherRepository.findByName(name) != null) {

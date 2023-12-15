@@ -24,7 +24,8 @@ public class AuthorService {
         author.setName(name);
         authorRepository.save(author);
     }
-    
+
+    @Transactional(readOnly=true)
     public List<Author> listAuthors(){
         return authorRepository.findAll();
     }
@@ -41,12 +42,14 @@ public class AuthorService {
             authorRepository.save(author);
         }
     }
-    
+
+    @Transactional(readOnly=true)
     public Author getOneAuthorById(String idAuthor) {
         return authorRepository.findById(idAuthor).orElseThrow( 
                 () -> new NoSuchElementException("Author not found."));
     }
-    
+
+    @Transactional(readOnly=true)
     public Author getOneAuthorByName(String name) throws CustomizedException {
         validate(name);
         if (authorRepository.findByName(name) != null) {

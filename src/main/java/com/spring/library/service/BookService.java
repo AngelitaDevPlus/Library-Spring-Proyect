@@ -87,11 +87,13 @@ public class BookService {
         }
     }
 
+    @Transactional(readOnly=true)
     public Book getOneBookById(Long isbn) {
         return bookRepository.findById(isbn).orElseThrow(
                 () -> new NoSuchElementException("Book not found."));
     }
 
+    @Transactional(readOnly=true)
     public Book getOneBookByTitle(String title) throws CustomizedException {
         
         if (bookRepository.findByTitle(title) != null) {
